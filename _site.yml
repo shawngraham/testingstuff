@@ -9,11 +9,7 @@ navbar:
       href: index.html
     - text: "Second"
       href: second.html
+    - text: "Third"
+      href: third.html
     - text: "Email Prof. Your Name"
       href: mailto:Your Email Address
-output:
-    html_document:
-      toc: true
-      toc_depth: 2
-      toc_float: true
-      theme: cosmo
