@@ -1,0 +1,97 @@
+---
+title: "Using Mapzen"
+author: "Shawn Graham"
+date: "August 26, 2017"
+output: 
+    html_document:
+     toc: true
+     toc_depth: 2
+     toc_float: true
+     theme: cosmo
+---
+```{r}
+# devtools::install_github("tarakc02/rmapzen")
+```
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r, echo=FALSE}
+Sys.setenv(MAPZEN_KEY = "mapzen-gcMb3SB")
+
+# install.packages('leaflet')
+library('leaflet')
+library(rmapzen)
+```
+
+Now to geocode Forum Novum
+```{r}
+mz_geocode("Santuario Vescovio, Torri in Sabina, Italia")
+
+fn <- mz_geocode("Santuario Vescovio, Torri in Sabina, Italia")
+isos <- mz_isochrone(
+  fn,
+  costing_model = mz_costing$pedestrian(),
+  contours = mz_contours(c(5, 10, 20, 30))
+)
+```
+
+## Now Map It
+
+```{r}
+library(leaflet)
+leaflet(as_sp(isos)) %>%
+  addProviderTiles("CartoDB.DarkMatter") %>%
+  addPolygons(color = ~paste0("#", color), weight = 1) %>%
+  addLegend(colors = ~paste0("#", color), 
+            labels = ~paste(contour, "minutes"),
+            title = "Walking times from <br/> Forum Novum")
+
+```
+
+# Now do it all again for Paterson Hall
+
+First geocode the Paterson 
+```{r}
+paterson <- mz_geocode("Paterson Hall, Carleton University, Ottawa, Ontario")
+```
+
+Then identify the area that is within 15 minutes walking distance
+
+```{r}
+  walkable <- mz_isochrone(
+  paterson,
+  costing_model = mz_costing$pedestrian(),
+  contours = mz_contours(15))
+```
+
+now search for food joints, but limit the search to areas within "walkable"
+
+```{r}
+stores <- mz_search(
+  "Tim Horton's", 
+  boundary.rect = mz_bbox(walkable), 
+  layers = mz_layers$venue, 
+  size = 15
+)
+```
+
+.. and use the leaflet package to draw the map
+```{r}
+leaflet(as_sp(walkable)) %>%
+  addProviderTiles("CartoDB.DarkMatter") %>%
+  addPolygons(color = "#ffffff", weight = 1) %>%
+  addMarkers(
+    data = paterson, 
+    lat = ~geocode_latitude, 
+    lng = ~geocode_longitude,
+    popup = "Paterson Hall") %>%
+  addCircleMarkers(
+    data = as_sp(stores), 
+    weight = 1,
+    radius = 7,
+    opacity = 1,
+    popup = ~name,
+    color = "#ff0000")
+```

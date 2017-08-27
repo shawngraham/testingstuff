@@ -3,13 +3,13 @@ output_dir: "."
 navbar:
   title: "Navigation"
   left:
-    - text: "First"
-      href: first.html
     - text: "Description"
       href: index.html
-    - text: "Second"
+    - text: "Mapzen"
+      href: mapzen.html
+    - text: "Syllabus"
       href: second.html
-    - text: "Third"
+    - text: "Assessment"
       href: third.html
     - text: "Email Prof. Shawn Graham"
       href: mailto:shawn.graham@carleton.ca
