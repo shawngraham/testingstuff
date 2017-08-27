@@ -1,7 +1,7 @@
-name: Your Course Title Here
+name: An Open Notebook
 output_dir: "."
 navbar:
-  title: "Your Navigation Title Here"
+  title: "Navigation"
   left:
     - text: "First"
       href: first.html
@@ -11,5 +11,5 @@ navbar:
       href: second.html
     - text: "Third"
       href: third.html
-    - text: "Email Prof. Your Name"
-      href: mailto:Your Email Address
+    - text: "Email Prof. Shawn Graham"
+      href: mailto:shawn.graham@carleton.ca
