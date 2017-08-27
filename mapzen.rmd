@@ -43,8 +43,8 @@ isos <- mz_isochrone(
 library(leaflet)
 leaflet(as_sp(isos)) %>%
   addProviderTiles("CartoDB.DarkMatter") %>%
-  addPolygons(color = ~paste0("#", color), weight = 1) %>%
-  addLegend(colors = ~paste0("#", color), 
+  addPolygons(color = ~paste0("#ffffff", color), weight = 1) %>%
+  addLegend(colors = ~paste0("#ff0000", color), 
             labels = ~paste(contour, "minutes"),
             title = "Walking times from <br/> Forum Novum")
 
