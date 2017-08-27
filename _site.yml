@@ -1,0 +1,13 @@
+name: Your Course Title Here
+output_dir: "."
+navbar:
+  title: "Your Navigation Title Here"
+  left:
+    - text: "First"
+      href: first.html
+    - text: "Description"
+      href: index.html
+    - text: "Second"
+      href: second.html
+    - text: "Email Prof. Your Name"
+      href: mailto:Your Email Address
